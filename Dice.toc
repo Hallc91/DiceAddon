@@ -1,8 +1,8 @@
 ## Interface: 70000
-## Version: 7.0.3 r6
+## Version: 0.1
 ## Title: Dice
 ## Authors: Asalia
-## SavedVariablesPerCharacter: MeleeProwess, Marksmanship, Spellcasting, Block, Dodge, Barrier, DifficultyCheck
+## SavedVariablesPerCharacter: MeleeProwess, Marksmanship, Spellcasting, Block, Dodge, Barrier, DifficultyCheck, Damage, DCTarget, MasqueCheck, DifficultyCheckDef, DamageDef
 
 
 Dice.lua
