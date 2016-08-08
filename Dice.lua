@@ -74,9 +74,9 @@
 	end)
 	masque:SetScript("OnClick", function()
 	if MasqueCheck == "True" then
-	MasqueCheck = "False" else
-	MasqueCheck = "True" end
-	 		end)
+		MasqueCheck = "False" else
+		MasqueCheck = "True" end
+	end)
 --	masque:SetScript("PostClick", function()
 --	print(MasqueCheck) end )
 	masqb = background:CreateFontString(nil, "High", "GameTooltipText")
@@ -189,17 +189,11 @@
 	
 local f = CreateFrame("Frame")
 f:SetScript("OnEvent",function(self,event,...)
-  local arg1 = select(1,...)
-     name,roll,minRoll,maxRoll = arg1:match("^(.+) rolls (%d+) %((%d+)%-(%d+)%)$")
+	local arg1 = select(1,...)
+	name,roll,minRoll,maxRoll = arg1:match("^(.+) rolls (%d+) %((%d+)%-(%d+)%)$")
 end)
 f:RegisterEvent("CHAT_MSG_SYSTEM")
 	
-local g = CreateFrame("Frame")
-g:SetScript("OnEvent",function(self,event,...)
-  local arg2 = select(1,...)
-     name,roll2,minRoll,maxRoll = arg2:match("^(.+) rolls (%d+) %((%d+)%-(%d+)%)$")
-end)
-g:RegisterEvent("CHAT_MSG_SYSTEM")	
 	
 	melee = CreateFrame("Button","melee",background,"GameMenuButtonTemplate") 
     melee:SetFrameStrata("LOW")
@@ -212,12 +206,13 @@ g:RegisterEvent("CHAT_MSG_SYSTEM")
     melee:SetAlpha(0.95)
 	melee:SetScript("PreClick",function()
 		RandomRoll(1, 20)
-		RandomRoll(1, 15) 
 		InRaid = IsInRaid()
 		InParty = IsInGroup(LE_PARTY_CATEGORY_HOME)
-		end)
+		mdmg = 0
+		nroll = 0
+	end)
 	melee:SetScript("OnClick", function()
-		local mdmg = 0
+		
 		C_Timer.After(0.3, function()
 		 nroll = tonumber(roll)
 		 d20t = nroll + MeleeProwess
@@ -225,28 +220,36 @@ g:RegisterEvent("CHAT_MSG_SYSTEM")
 		if d20t >= DifficultyCheck then
 			OutC = "Pass" else
 			OutC = "Fail"
+			
+		end
+		if OutC == "Pass" and MasqueCheck == "True" then
+		RandomRoll(1, 15) else
 		end
 		end
 		)
+		end )
+		
+		melee:SetScript("PostClick", function()
 		if OutC == "Pass" and MasqueCheck == "True" then
-		C_Timer.After(0.5, function()
-		local d15 = tonumber(roll2)
-			if d15 == 15 then mdmg = 5 else
-				if d15 >= 13 then mdmg = 4 else
-					if d15 >= 9 then mdmg = 3 else
-						if d15 >= 7 then mdmg = 2 else
-							if d15 >= 4 then mdmg = 1 else
-								if d15 >= 1 then mdmg = 0 else mdmg = 0 
+			
+			C_Timer.After(0.8, function()
+				local d15 = tonumber(roll)
+					if d15 == 15 then mdmg = 5 else
+						if d15 >= 13 then mdmg = 4 else
+							if d15 >= 9 then mdmg = 3 else
+								if d15 >= 7 then mdmg = 2 else
+									if d15 >= 4 then mdmg = 1 else
+										if d15 >= 1 then mdmg = 0 else mdmg = 0 
+										end
+									end
 								end
-								end
-								end
-								end
-								end
-								end
-								end)								
-								else 
-								end
-C_Timer.After(1, function()
+							end
+						end
+					end
+				end)								
+			else 
+		end
+C_Timer.After(1.5, function()
 		if OutC == "Fail" then
 		tdmg = 0 else
 				if nroll == 20 then
